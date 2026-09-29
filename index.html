@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TWN — The Ghost Currency Code | Batumi Coffee Case File</title>
+<meta name="description" content="TWN is not a real currency. How a 1 GEL coffee in Batumi, Georgia ended up charged as &quot;-1,00 TWN&quot; on a bank statement — and what the phantom ISO code really means.">
+<style>
+  :root {
+    --bg: #0d1117;
+    --panel: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --ghost: #a371f7;
+    --green: #3fb950;
+    --red: #f85149;
+    --amber: #d29922;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+  }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+
+  /* Hero */
+  header {
+    text-align: center;
+    padding: 70px 20px 50px;
+    background: radial-gradient(ellipse at top, rgba(163,113,247,0.15), transparent 60%);
+    border-bottom: 1px solid var(--border);
+  }
+  .badge {
+    display: inline-block;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--ghost);
+    border: 1px solid var(--ghost);
+    border-radius: 999px;
+    padding: 4px 14px;
+    margin-bottom: 22px;
+  }
+  h1.code {
+    font-size: clamp(64px, 14vw, 120px);
+    font-weight: 800;
+    letter-spacing: 4px;
+    color: var(--ghost);
+    text-shadow: 0 0 40px rgba(163,113,247,0.45);
+    animation: flicker 4s infinite;
+  }
+  @keyframes flicker {
+    0%, 92%, 96%, 100% { opacity: 1; }
+    94% { opacity: 0.35; }
+    95% { opacity: 0.8; }
+  }
+  header p.tagline {
+    color: var(--muted);
+    font-size: 18px;
+    margin-top: 12px;
+  }
+  header .strike { text-decoration: line-through; color: var(--red); }
+
+  section { padding: 48px 0; border-bottom: 1px solid var(--border); }
+  h2 { font-size: 26px; margin-bottom: 18px; color: var(--accent); }
+  h3 { font-size: 18px; margin: 22px 0 8px; }
+  p { margin-bottom: 12px; color: var(--text); }
+  .muted { color: var(--muted); }
+
+  /* Statement mock */
+  .statement {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 24px auto;
+    max-width: 520px;
+    font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+  }
+  .statement .row { display: flex; justify-content: space-between; padding: 6px 0; }
+  .statement .label { color: var(--muted); font-size: 14px; }
+  .statement .amount { color: var(--red); font-weight: 700; font-size: 18px; }
+  .statement .twn {
+    color: var(--ghost);
+    border-bottom: 2px dashed var(--ghost);
+    cursor: help;
+    position: relative;
+  }
+  .statement .sub { font-size: 13px; color: var(--muted); margin-top: 8px; }
+
+  /* Table */
+  table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 15px; }
+  th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--border); }
+  th { color: var(--muted); text-transform: uppercase; font-size: 12px; letter-spacing: 1px; }
+  tr.ghost td { background: rgba(163,113,247,0.08); color: var(--ghost); font-weight: 700; }
+  td .ok { color: var(--green); }
+  td .no { color: var(--red); }
+
+  /* Cards grid */
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-top: 20px; }
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .card .icon { font-size: 28px; margin-bottom: 10px; }
+  .card h3 { margin: 0 0 8px; font-size: 16px; color: var(--text); }
+  .card p { font-size: 14px; color: var(--muted); margin: 0; }
+
+  /* Timeline */
+  .timeline { list-style: none; margin: 20px 0; }
+  .timeline li {
+    position: relative;
+    padding: 0 0 22px 34px;
+    border-left: 2px solid var(--border);
+    margin-left: 12px;
+  }
+  .timeline li:last-child { border-left-color: transparent; }
+  .timeline li::before {
+    content: "";
+    position: absolute;
+    left: -8px; top: 4px;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 3px solid var(--bg);
+  }
+  .timeline li.ghost::before { background: var(--ghost); }
+  .timeline .date { font-family: ui-monospace, monospace; color: var(--amber); font-size: 13px; }
+
+  /* Callout */
+  .callout {
+    border-left: 4px solid var(--green);
+    background: rgba(63,185,80,0.08);
+    border-radius: 0 10px 10px 0;
+    padding: 16px 20px;
+    margin: 24px 0;
+  }
+  .callout.warn { border-left-color: var(--amber); background: rgba(210,153,34,0.08); }
+  .callout strong { color: var(--text); }
+
+  ol.steps { margin: 16px 0 16px 22px; }
+  ol.steps li { margin-bottom: 10px; }
+
+  footer {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--muted);
+    font-size: 14px;
+  }
+  footer .sig { font-style: italic; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="badge">Case file: Newtaiwandollargeorgia · Batumi, 29 Sep 2026</div>
+  <h1 class="code">TWN</h1>
+  <p class="tagline">The currency that never was. <span class="strike">New Taiwan Dollar</span> → a firmware typo<br>
+  The story of a 1&nbsp;GEL coffee in Batumi, Georgia, haunted by a phantom three-letter code.</p>
+</header>
+
+<div class="wrap">
+
+  <!-- THE LINE THAT STARTED IT ALL -->
+  <section>
+    <h2>The line that started it all</h2>
+    <p>A coffee. One Georgian lari. A tap of the card, a beep, and the humid Black Sea air. Then, later that night, the banking app showed this:</p>
+
+    <div class="statement" role="img" aria-label="Banking app transaction line showing minus 1,00 TWN">
+      <div class="row">
+        <span class="label">Płatność kartą</span>
+        <span class="amount">−1,00 <span class="twn" title="TWN is NOT a valid ISO 4217 currency code — it does not exist.">TWN</span></span>
+      </div>
+      <div class="sub">georgian vending group, Tbilisi · Today</div>
+      <div class="sub">Dopasowana Mastercard debit ····2673</div>
+    </div>
+
+    <p><strong>TWN. "New Taiwan Dollar." In Georgia.</strong> For a coffee drunk with one's own hands, in a country entered legally two weeks earlier, on a card that never left the wallet. The first instinct was the classic traveller's dread: a cloned card feeding through a terminal in Taipei. The second instinct — after looking at the numbers and the passport stamps — was warmer and stranger: <em>nobody cloned anything. The machine simply lied about what money is.</em></p>
+  </section>
+
+  <!-- WHAT IS TWN -->
+  <section>
+    <h2>So what is "TWN"?</h2>
+    <p>Here is the punchline: <strong>TWN is not a currency.</strong> It does not appear anywhere in ISO 4217 — the international standard for currency codes. It exists in no central bank's ledger. (It <em>is</em> a real code — just not for money: TWN is Taiwan's ISO 3166 <em>country</em> code, which is exactly the kind of thing a buggy currency table confuses.) The actual cast of characters:</p>
+
+    <table>
+      <thead>
+        <tr><th>Code</th><th>Currency</th><th>Belongs to</th><th>Role in the story</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>GEL</strong></td><td>Lari 🇬🇪</td><td>Georgia</td><td><span class="ok">✔ What was actually paid (1,00)</span></td></tr>
+        <tr><td><strong>TWD</strong></td><td>New Taiwan Dollar 🇹🇼</td><td>Taiwan</td><td>The real Taiwan code — never touched the coffee</td></tr>
+        <tr><td><strong>PLN</strong></td><td>Złoty 🇵🇱</td><td>Poland</td><td>Home currency — what the bank should settle in</td></tr>
+        <tr><td><strong>THB</strong></td><td>Baht 🇹🇭</td><td>Thailand</td><td>Where the cardholder was 15 days earlier</td></tr>
+        <tr class="ghost"><td>TWN</td><td>(nothing)</td><td>🚫 nowhere</td><td>The ghost in the terminal's firmware</td></tr>
+      </tbody>
+    </table>
+
+    <h3>The FX sanity check</h3>
+    <p>The number next to the ghost is honest: <strong>1,00</strong> — the lari price, digit for digit. One GEL ≈ 1.4–1.5&nbsp;zł ≈ 11–12&nbsp;TWD. A genuine 1-TWD charge would be about 0.12&nbsp;zł — pocket change, not a coffee. So "1,00 TWN" can only be the raw GEL figure wearing a stolen, invalid label. The amount field survived the journey intact; the currency field got mangled somewhere between the vending terminal, the Georgian acquirer in Tbilisi, and the bank's parser.</p>
+  </section>
+
+  <!-- WHY IT'S NOT FRAUD -->
+  <section>
+    <h2>Why it isn't fraud — the ink says so</h2>
+    <p>Fraud has a geography problem, and this case resolves it for free. The passport stamps place the cardholder — and the card — physically in Georgia:</p>
+
+    <ul class="timeline">
+      <li><span class="date">18 Jul 2019</span><br>Old passport <strong>ES1421811</strong> issued — later voided with a cancellation punch-hole through its MRZ.</li>
+      <li><span class="date">20 Jul 2026</span><br>New passport <strong>FL0263070</strong> issued by the Consul of Poland in Bangkok (valid to 2036) — proof of mid-2026 residence in Thailand.</li>
+      <li><span class="date">14 Sep 2026</span><br>🛫 <strong>Suvarnabhumi Airport</strong> — oval blue Thai IMMIGRATION stamp: DEPARTED.</li>
+      <li><span class="date">15 Sep 2026</span><br>✈️ <strong>BATUMI · GE · 15 09 2026 · 0387</strong> — rectangular grey entry stamp with the five-cross icon: arrival by air at Batumi International.</li>
+      <li><span class="date">29 Sep 2026</span><br>☕ The 1 GEL coffee. Timestamped "Today", merchant descriptor <em>georgian vending group</em>. Two weeks deep inside Georgia.</li>
+      <li class="ghost"><span class="date">Same moment</span><br>👻 The bank line is born reading <strong>−1,00 TWN</strong> — a currency that does not exist, in a country that does.</li>
+    </ul>
+
+    <p>A cloned card swiped in Taiwan would carry a <em>Taiwanese</em> merchant name and a <em>TWD</em> amount unrelated to any latte. It would not greet you with "Hello, Dawid!" on your own logged-in app, matching DAVID LISOWSKI on the data page, on a card ending 2673 you personally activated. And the Tbilisi-vs-Batumi descriptor mismatch? Normal noise: most Georgian acquirers and vending operators are registered in the capital, so the statement prints the processor's home city while the terminal sits on a Batumi boulevard.</p>
+
+    <div class="callout">
+      <strong>Verdict:</strong> local transaction, bad metadata. You paid 1 GEL at a Batumi merchant with your own card while legally inside Georgia. No evidence of skimming or cloning — just a broken currency tag on an otherwise correct amount.
+    </div>
+  </section>
+
+  <!-- MOST LIKELY CAUSES -->
+  <section>
+    <h2>How a ghost gets into the machine</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="icon">🖥️</div>
+        <h3>Terminal misconfiguration</h3>
+        <p>A cheap vending terminal ships with a corrupted currency table in its firmware — a hole shaped like TWN where GEL should be.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🔀</div>
+        <h3>Acquirer / processor mapping bug</h3>
+        <p>Somewhere between the Georgian terminal and the issuing bank's parser, the GEL field got re-tagged with garbage during message translation.</p>
+      </div>
+      <div class="card">
+        <div class="icon">📋</div>
+        <h3>ISO non-compliance</h3>
+        <p>Someone used "TWN" — Taiwan's ISO 3166 <em>country</em> code — in a slot that expects an ISO 4217 <em>currency</em> code. Country ≠ currency.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🧾</div>
+        <h3>Three layers, zero agreement</h3>
+        <p>Receipt said ALLIANCE PALACA, descriptor said "georgian vending group, Tbilisi", currency said "TWN". The payment stack is a Rorschach test — trust the ink, not the metadata.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT TO DO -->
+  <section>
+    <h2>What to do when your statement grows a ghost</h2>
+    <ol class="steps">
+      <li><strong>Don't panic-block the card.</strong> The geography and the amount both point to a genuine local sale. Freezing a good card over a firmware typo buys you a week in support purgatory.</li>
+      <li><strong>Keep the receipt</strong> (the one showing 1 GEL) until the line posts correctly.</li>
+      <li><strong>Watch the settled zł amount.</strong> If the back-office really tried to convert "1.00 TWN", you'll see either a comically tiny posting (~0.1–0.2 zł) or the item held/rejected — both fixable, and both prove the display is wrong.</li>
+      <li><strong>Contact the bank with evidence:</strong> the screenshot of the "−1,00 TWN" line, the 1 GEL receipt, and optionally the Batumi entry stamp (15 09 2026) as proof of life in Georgia, not Taiwan.</li>
+      <li><strong>Request, in writing:</strong> relabel the currency code to GEL and confirm the FX conversion actually used. A non-existent ISO code breaks reconciliation and can trip false fraud flags later.</li>
+    </ol>
+    <div class="callout warn">
+      <strong>Honest caveat:</strong> ink can't be authenticated from a photo, and two small quirks deserve a glance <em>only</em> if a third party ever challenges the documents — the Thai oval's airport name looks compressed ("SUVAR…BHUMI", usually just curvature/ink bleed), and the Georgian rectangle's star-circle around "GE" superficially resembles an EU motif (Georgia is not EU). Neither affects the verdict above.
+    </div>
+  </section>
+
+  <!-- LESSON -->
+  <section>
+    <h2>What the ghost teaches</h2>
+    <p>We hand our trust to a chain of boxes we cannot see: <span class="muted">terminal → acquirer → network → issuer → app</span>, each one re-typing what the last one said, each one allowed a small mistake that compounds into a headline like "New Taiwan Dollar" on a Georgian coffee. The drama isn't that money moved somewhere it shouldn't. The drama is that <strong>the label detached from the thing</strong>. The lari was real, the coffee was real, the stamps were real; only the three letters were a hallucination.</p>
+    <p>So the next time your statement shows a currency you've never heard of, before you reach for the "block card" button — reach for your passport instead. Sometimes the scariest line on the screen is just a machine that forgot what world it lives in, and the ink, patient and boring, is the only one telling the truth.</p>
+  </section>
+
+</div>
+
+<footer>
+  <p class="sig">— Dawid, Batumi, 29 Sept 2026 · Case file: Newtaiwandollargeorgia ☕🇬🇪</p>
+  <p>TL;DR: 1 GEL coffee posted as "−1,00 TWN". TWN is not a valid ISO 4217 code (Taiwan = TWD, Georgia = GEL); the amount is the real lari price — only the currency tag is corrupted. Fix the label with the bank, don't freeze the card over a typo.</p>
+</footer>
+
+</body>
+</html>
