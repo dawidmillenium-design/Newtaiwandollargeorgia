@@ -71,3 +71,19 @@ body.ghost-theme .transaction-image a:hover img{transform:scale(1.015)}
 body.ghost-theme .transaction-image figcaption{padding:.75rem .35rem .15rem;color:#cbd9f1;font-size:.82rem;line-height:1.45;text-align:center}
 @container(max-width:360px){body.ghost-theme .transaction-image figcaption{font-size:.76rem}}
 @media(prefers-reduced-motion:reduce){body.ghost-theme .transaction-image img{transition:none}}
+
+/* Ghost hands, ringing bells, and a delayed speech cloud */
+body.ghost-theme .ghost-bell{transform-box:fill-box;transform-origin:50% 0%;filter:drop-shadow(0 5px 8px rgba(21,10,46,.42))}
+body.ghost-theme .ghost-bell-pln{animation:bell-sway-left 1.5s ease-in-out infinite alternate}
+body.ghost-theme .ghost-bell-twn{animation:bell-sway-right 1.7s ease-in-out infinite alternate}
+@keyframes bell-sway-left{from{transform:rotate(-9deg)}to{transform:rotate(10deg)}}
+@keyframes bell-sway-right{from{transform:rotate(10deg)}to{transform:rotate(-9deg)}}
+body.ghost-theme .ghost-speech{opacity:0;transform:translate(-12px,14px) scale(.75);transform-origin:260px 196px;animation:ghost-speech-reveal .7s cubic-bezier(.2,1.5,.4,1) 3s forwards;filter:drop-shadow(0 8px 16px rgba(0,0,0,.24))}
+@keyframes ghost-speech-reveal{to{opacity:1;transform:translate(0,0) scale(1)}}
+body.ghost-theme .evidence-image{width:min(100%,760px);margin:1.7rem auto 2rem;padding:clamp(.5rem,1.4vw,.8rem);background:linear-gradient(145deg,#273862,#151e40);border:1px solid var(--ghost-edge);border-radius:22px;box-shadow:0 18px 50px rgba(0,0,0,.28);container-type:inline-size}
+body.ghost-theme .evidence-image a{display:block;overflow:hidden;border-radius:14px;line-height:0;background:#10182f}
+body.ghost-theme .evidence-image img{display:block;width:100%;height:auto;aspect-ratio:3659 / 3120;object-fit:contain;border-radius:14px;transition:transform .25s ease}
+body.ghost-theme .evidence-image a:hover img{transform:scale(1.012)}
+body.ghost-theme .evidence-image figcaption{padding:.75rem .35rem .15rem;color:#cbd9f1;font-size:.85rem;line-height:1.45;text-align:center}
+@container(max-width:360px){body.ghost-theme .evidence-image figcaption{font-size:.76rem}}
+@media(prefers-reduced-motion:reduce){body.ghost-theme .ghost-bell,body.ghost-theme .ghost-speech{animation:none}body.ghost-theme .ghost-speech{opacity:1;transform:none}body.ghost-theme .evidence-image img{transition:none}}
