@@ -62,3 +62,12 @@ body.ghost-theme .related-reading a{display:block;padding:.65rem .8rem;border:1p
 body.ghost-theme .related-reading a:hover{background:rgba(166,255,241,.1)}
 body.ghost-theme .editorial-note{padding:1rem 1.2rem;border-left:3px solid var(--ghost-cyan);background:#202b51;border-radius:0 10px 10px 0}
 @media(max-width:800px){body.ghost-theme .start-here,body.ghost-theme .related-reading{margin-left:1rem;margin-right:1rem}}
+
+/* Responsive portrait evidence image (2261 × 3931 source) */
+body.ghost-theme .transaction-image{width:min(100%,480px);margin:1.5rem auto 2rem;padding:clamp(.55rem,1.5vw,.8rem);background:linear-gradient(145deg,#273862,#151e40);border:1px solid var(--ghost-edge);border-radius:22px;box-shadow:0 18px 50px rgba(0,0,0,.28);container-type:inline-size}
+body.ghost-theme .transaction-image a{display:block;overflow:hidden;border-radius:14px;line-height:0;background:#10182f}
+body.ghost-theme .transaction-image img{display:block;width:100%;height:auto;aspect-ratio:2261 / 3931;object-fit:contain;border-radius:14px;transition:transform .25s ease}
+body.ghost-theme .transaction-image a:hover img{transform:scale(1.015)}
+body.ghost-theme .transaction-image figcaption{padding:.75rem .35rem .15rem;color:#cbd9f1;font-size:.82rem;line-height:1.45;text-align:center}
+@container(max-width:360px){body.ghost-theme .transaction-image figcaption{font-size:.76rem}}
+@media(prefers-reduced-motion:reduce){body.ghost-theme .transaction-image img{transition:none}}
