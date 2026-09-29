@@ -87,3 +87,9 @@ body.ghost-theme .evidence-image a:hover img{transform:scale(1.012)}
 body.ghost-theme .evidence-image figcaption{padding:.75rem .35rem .15rem;color:#cbd9f1;font-size:.85rem;line-height:1.45;text-align:center}
 @container(max-width:360px){body.ghost-theme .evidence-image figcaption{font-size:.76rem}}
 @media(prefers-reduced-motion:reduce){body.ghost-theme .ghost-bell,body.ghost-theme .ghost-speech{animation:none}body.ghost-theme .ghost-speech{opacity:1;transform:none}body.ghost-theme .evidence-image img{transition:none}}
+
+/* Editorial context and transparent bylines */
+.editorial-context{max-width:900px;margin:36px auto;padding:22px clamp(18px,4vw,32px);background:rgba(113,242,232,.06);border:1px solid rgba(113,242,232,.28);border-radius:18px;color:#e6edf3;line-height:1.65}
+.editorial-context h2{margin:0 0 12px;font-size:clamp(1.3rem,3vw,1.7rem);color:#f5f8ff}
+.editorial-context p{margin:12px 0}.editorial-context a,.editorial-byline a{color:#71f2e8;text-decoration:underline;text-underline-offset:3px}.editorial-byline{font-size:.9rem;color:#b8c9df;margin:8px 0 22px}
+@media(max-width:600px){.editorial-context{margin:24px 12px;padding:18px}.editorial-context a{overflow-wrap:anywhere}}
